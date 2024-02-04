@@ -155,5 +155,11 @@ class GoogleSheet:
                 "response"  : e
             }
 
-    def info(self):
+    def info(self) -> object:
+        """
+            Get sheet info.
+
+            Returns:
+                object              : return sheet info
+        """
         return self.SHEET.sheets()
