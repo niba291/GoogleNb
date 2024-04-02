@@ -6,9 +6,11 @@ class GoogleSheet:
     CREDS           = None
     SERVICE         = None
     SHEET           = None
+    FORMAT          = None
+    FORMAT_DEFAULT  = "JSON"
     SCOPE           = ["https://www.googleapis.com/auth/spreadsheets"]
 
-    def __init__(self, key: str = ""):
+    def __init__(self, key: str = "", format = FORMAT_DEFAULT):
         """
             Creates a GoogleSheet instance.
             
@@ -19,10 +21,11 @@ class GoogleSheet:
             self.CREDS          = service_account.Credentials.from_service_account_file(key, scopes=self.SCOPE)
             self.SERVICE        = build("sheets", "v4", credentials=self.CREDS)
             self.SHEET          = self.SERVICE.spreadsheets()
+            self.FORMAT         = format.upper()
         except Exception as e:
             print({
                 "error"     : True,
-                "response"  : e
+                "response"  : str(e)
             })
             exit(1)
 
@@ -52,20 +55,25 @@ class GoogleSheet:
                 range           = range
             ).execute()
 
-            auxReturn           = []
+            auxReturn           = result["values"]
 
-            for element in result["values"][1:]:
-                obj             = {}
-                for index, item in enumerate(result["values"][0]):
-                    obj[item]   = element[index]
-                
-                auxReturn.append(obj)
+            if(self.FORMAT == self.FORMAT_DEFAULT):
+
+                auxReturn           = []
+
+                for element in result["values"][1:]:
+                    obj             = {}
+                    lenList         = len(element)
+                    for index, item in enumerate(result["values"][0]):
+                        obj[item]   = element[index] if lenList > index else ""
+                    
+                    auxReturn.append(obj)
 
             return auxReturn
         except Exception as e:
             return {
                 "error"     : True,
-                "response"  : e
+                "response"  : str(e)
             }
 
     def add(self, spreadsheetId: str = "", range: str = "", data: dict = {}) -> dict:
@@ -90,7 +98,7 @@ class GoogleSheet:
         except Exception as e:
             return {
                 "error"     : True,
-                "response"  : e
+                "response"  : str(e)
             }
 
     def update(self, spreadsheetId: str = "", range: str = "", data: dict = {}) -> dict:
@@ -115,10 +123,10 @@ class GoogleSheet:
         except Exception as e:
             return {
                 "error"     : True,
-                "response"  : e
+                "response"  : str(e)
             }
 
-    def delete(self, spreadsheetId: str = "", range: str = "", idSheet: str = "") -> dict:
+    def delete(self, spreadsheetId: str = "", idSheet: str = "", range: str = "") -> dict:
         """
             Delete data to the sheet.
             
@@ -152,7 +160,7 @@ class GoogleSheet:
         except Exception as e:
             return {
                 "error"     : True,
-                "response"  : e
+                "response"  : str(e)
             }
 
     def info(self) -> object:

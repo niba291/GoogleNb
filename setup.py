@@ -1,11 +1,11 @@
-import setuptools
+from setuptools                     import setup, find_packages
 
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
-setuptools.setup(
-    name                            = "PyGoogleNb",
-    version                         = "1.1.0",
+setup(
+    name                            = "GoogleNb",
+    version                         = "0.0.2",
     author                          = "niba291",
     author_email                    = "nibaldochavezp@gmail.com",
     description                     = "API google",
@@ -14,11 +14,11 @@ setuptools.setup(
     long_description                = long_description,
     long_description_content_type   = "text/markdown",
     package_dir                     = {"": "src"},
-    packages                        = setuptools.find_packages(where="src"),
     classifiers                     = [
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    # install_requires                = ["google-api-python-client >= 2.116.0", "google >= 3.0.0"]
+    packages                        = find_packages(where="src"),
+    install_requires                = ["google-api-python-client >= 2.116.0", "google >= 3.0.0"]
 )

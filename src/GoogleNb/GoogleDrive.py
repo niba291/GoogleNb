@@ -22,7 +22,7 @@ class GoogleDrive:
         except Exception as e:
             print({
                 "error"     : True,
-                "response"  : e
+                "response"  : str(e)
             })
             exit(1)
 
@@ -47,5 +47,5 @@ class GoogleDrive:
         except Exception as e:
             return {
                 "error"     : True,
-                "response"  : e
+                "response"  : str(e)
             }

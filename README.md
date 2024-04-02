@@ -5,10 +5,10 @@
 
 ## Installation
 
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install pydrive.
+Use the package manager [pip](https://pip.pypa.io/en/stable/) to install GoogleNb.
 
 ```bash
-pip install pydrive
+pip install GoogleNb
 ```
 
 ## License
